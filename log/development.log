@@ -1,0 +1,261 @@
+  [4;36;1mSQL (2.2ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (4.4ms)[0m   [0;1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [4;35;1mSQL (3.0ms)[0m   [0mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateAlbums (20101006174123)
+  [4;36;1mSQL (6.0ms)[0m   [0;1mCREATE TABLE "albums" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.6ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20101006174123')[0m
+Migrating to CreatePhotos (20101006174257)
+  [4;36;1mSQL (1.8ms)[0m   [0;1mCREATE TABLE "photos" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "album_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [4;35;1mSQL (0.7ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20101006174257')[0m
+Migrating to AddAttachmentsDataToPhoto (20101006174310)
+  [4;36;1mSQL (1.6ms)[0m   [0;1mALTER TABLE "photos" ADD "data_file_name" varchar(255)[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mALTER TABLE "photos" ADD "data_content_type" varchar(255)[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mALTER TABLE "photos" ADD "data_file_size" integer[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mALTER TABLE "photos" ADD "data_updated_at" datetime[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20101006174310')[0m
+  [4;35;1mSQL (1.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (1.2ms)[0m   [0m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mPRAGMA index_list("albums")[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mPRAGMA index_list("photos")[0m
+
+
+Processing AlbumsController#index (for 127.0.0.1 at 2010-10-06 23:13:56) [GET]
+  [4;36;1mAlbum Load (1.3ms)[0m   [0;1mSELECT * FROM "albums" [0m
+Rendering template within layouts/application
+Rendering albums/index
+Completed in 2101ms (View: 1984, DB: 1) | 200 OK [http://localhost/albums]
+
+
+Processing AlbumsController#new (for 127.0.0.1 at 2010-10-06 23:14:15) [GET]
+Rendering template within layouts/application
+Rendering albums/new
+Rendered albums/_form (169.3ms)
+Completed in 493ms (View: 473, DB: 0) | 200 OK [http://localhost/albums/new]
+
+
+Processing AlbumsController#index (for 127.0.0.1 at 2010-10-06 23:16:03) [GET]
+  [4;35;1mAlbum Load (25.0ms)[0m   [0mSELECT * FROM "albums" [0m
+Rendering template within layouts/application
+Rendering albums/index
+Completed in 475ms (View: 373, DB: 25) | 200 OK [http://localhost/albums]
+
+
+Processing AlbumsController#new (for 127.0.0.1 at 2010-10-06 23:25:12) [GET]
+Rendering template within layouts/application
+Rendering albums/new
+Rendered albums/_photo (37.9ms)
+Rendered albums/_photo (4.3ms)
+Rendered albums/_form (4129.6ms)
+Completed in 5443ms (View: 4424, DB: 0) | 200 OK [http://localhost/albums/new]
+
+
+Processing AlbumsController#create (for 127.0.0.1 at 2010-10-06 23:26:10) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"7tYCV8RSMO7wbfpVTybfmBttVCGGfG0XrfAMAT4tcc0=", "album"=>{"name"=>"first", "photos_attributes"=>{"index_to_replace_with_js"=>{"data"=>#<File:/tmp/RackMultipart20101006-8183-1yljem2-0>}}}}
+WARNING: Can't mass-assign these protected attributes: photos_attributes
+  [4;36;1mAlbum Create (96.5ms)[0m   [0;1mINSERT INTO "albums" ("name", "created_at", "updated_at") VALUES('first', '2010-10-06 17:56:10', '2010-10-06 17:56:10')[0m
+Redirected to http://localhost:3000/albums/1
+Completed in 259ms (DB: 96) | 302 Found [http://localhost/albums]
+
+
+Processing AlbumsController#show (for 127.0.0.1 at 2010-10-06 23:26:11) [GET]
+  Parameters: {"id"=>"1"}
+  [4;35;1mAlbum Load (22.3ms)[0m   [0mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albums/show
+  [4;36;1mPhoto Load (0.7ms)[0m   [0;1mSELECT * FROM "photos" WHERE ("photos".album_id = 1) [0m
+Completed in 143ms (View: 92, DB: 23) | 200 OK [http://localhost/albums/1]
+
+
+Processing AlbumsController#index (for 127.0.0.1 at 2010-10-06 23:26:19) [GET]
+  [4;35;1mAlbum Load (1.8ms)[0m   [0mSELECT * FROM "albums" [0m
+Rendering template within layouts/application
+Rendering albums/index
+Completed in 57ms (View: 32, DB: 2) | 200 OK [http://localhost/albums]
+
+
+Processing AlbumsController#show (for 127.0.0.1 at 2010-10-06 23:26:23) [GET]
+  Parameters: {"id"=>"1"}
+  [4;36;1mAlbum Load (1.0ms)[0m   [0;1mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albums/show
+  [4;35;1mPhoto Load (0.3ms)[0m   [0mSELECT * FROM "photos" WHERE ("photos".album_id = 1) [0m
+Completed in 63ms (View: 34, DB: 1) | 200 OK [http://localhost/albums/1]
+
+
+Processing AlbumsController#index (for 127.0.0.1 at 2010-10-06 23:26:46) [GET]
+  [4;36;1mAlbum Load (1.7ms)[0m   [0;1mSELECT * FROM "albums" [0m
+Rendering template within layouts/application
+Rendering albums/index
+Completed in 56ms (View: 32, DB: 2) | 200 OK [http://localhost/albums]
+
+
+Processing AlbumsController#new (for 127.0.0.1 at 2010-10-06 23:26:51) [GET]
+Rendering template within layouts/application
+Rendering albums/new
+Rendered albums/_photo (4.7ms)
+Rendered albums/_photo (4.0ms)
+Rendered albums/_form (379.2ms)
+Completed in 517ms (View: 453, DB: 0) | 200 OK [http://localhost/albums/new]
+
+
+Processing AlbumsController#create (for 127.0.0.1 at 2010-10-06 23:27:47) [POST]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"7tYCV8RSMO7wbfpVTybfmBttVCGGfG0XrfAMAT4tcc0=", "album"=>{"name"=>"second", "photos_attributes"=>{"index_to_replace_with_js"=>{"data"=>#<File:/tmp/RackMultipart20101006-8183-gycax4-0>}, "1286387844032"=>{"data"=>#<File:/tmp/RackMultipart20101006-8183-nmc0iq-0>}, "1286387853930"=>{"data"=>#<File:/tmp/RackMultipart20101006-8183-1ogg2gj-0>}}}}
+WARNING: Can't mass-assign these protected attributes: photos_attributes
+  [4;35;1mAlbum Create (12.6ms)[0m   [0mINSERT INTO "albums" ("name", "created_at", "updated_at") VALUES('second', '2010-10-06 17:57:47', '2010-10-06 17:57:47')[0m
+Redirected to http://localhost:3000/albums/2
+Completed in 69ms (DB: 13) | 302 Found [http://localhost/albums]
+
+
+Processing AlbumsController#show (for 127.0.0.1 at 2010-10-06 23:27:47) [GET]
+  Parameters: {"id"=>"2"}
+  [4;36;1mAlbum Load (1.3ms)[0m   [0;1mSELECT * FROM "albums" WHERE ("albums"."id" = 2) [0m
+Rendering template within layouts/application
+Rendering albums/show
+  [4;35;1mPhoto Load (0.4ms)[0m   [0mSELECT * FROM "photos" WHERE ("photos".album_id = 2) [0m
+Completed in 68ms (View: 36, DB: 2) | 200 OK [http://localhost/albums/2]
+
+
+Processing AlbumsController#index (for 127.0.0.1 at 2010-10-06 23:28:03) [GET]
+  [4;36;1mAlbum Load (2.0ms)[0m   [0;1mSELECT * FROM "albums" [0m
+Rendering template within layouts/application
+Rendering albums/index
+Completed in 72ms (View: 48, DB: 2) | 200 OK [http://localhost/albums]
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2010-10-06 23:28:11) [GET]
+
+ActionController::RoutingError (No route matches "/photos" with {:method=>:get}):
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendering rescues/layout (not_found)
+
+
+Processing AlbumsController#edit (for 127.0.0.1 at 2010-10-06 23:30:00) [GET]
+  Parameters: {"id"=>"1"}
+  [4;35;1mAlbum Load (1.0ms)[0m   [0mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albums/edit
+  [4;36;1mPhoto Load (0.7ms)[0m   [0;1mSELECT * FROM "photos" WHERE ("photos".album_id = 1) [0m
+Rendered albums/_photo (7.3ms)
+Rendered albums/_form (63.5ms)
+Completed in 129ms (View: 101, DB: 2) | 200 OK [http://localhost/albums/1/edit]
+
+
+Processing AlbumsController#update (for 127.0.0.1 at 2010-10-06 23:30:22) [PUT]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"7tYCV8RSMO7wbfpVTybfmBttVCGGfG0XrfAMAT4tcc0=", "id"=>"1", "album"=>{"name"=>"first", "photos_attributes"=>{"1286388006604"=>{"data"=>#<File:/tmp/RackMultipart20101006-8183-7mgx95-0>}}}}
+  [4;35;1mAlbum Load (1.3ms)[0m   [0mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+WARNING: Can't mass-assign these protected attributes: photos_attributes
+Redirected to http://localhost:3000/albums/1
+Completed in 41ms (DB: 1) | 302 Found [http://localhost/albums/1]
+
+
+Processing AlbumsController#show (for 127.0.0.1 at 2010-10-06 23:30:23) [GET]
+  Parameters: {"id"=>"1"}
+  [4;36;1mAlbum Load (0.5ms)[0m   [0;1mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albums/show
+  [4;35;1mPhoto Load (0.3ms)[0m   [0mSELECT * FROM "photos" WHERE ("photos".album_id = 1) [0m
+Completed in 34ms (View: 21, DB: 1) | 200 OK [http://localhost/albums/1]
+
+
+Processing AlbumsController#index (for 127.0.0.1 at 2010-10-06 23:30:27) [GET]
+  [4;36;1mAlbum Load (2.0ms)[0m   [0;1mSELECT * FROM "albums" [0m
+Rendering template within layouts/application
+Rendering albums/index
+Completed in 72ms (View: 45, DB: 2) | 200 OK [http://localhost/albums]
+
+
+Processing AlbumsController#show (for 127.0.0.1 at 2010-10-06 23:30:31) [GET]
+  Parameters: {"id"=>"1"}
+  [4;35;1mAlbum Load (1.1ms)[0m   [0mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albums/show
+  [4;36;1mPhoto Load (0.7ms)[0m   [0;1mSELECT * FROM "photos" WHERE ("photos".album_id = 1) [0m
+Completed in 76ms (View: 49, DB: 2) | 200 OK [http://localhost/albums/1]
+
+
+Processing AlbumsController#edit (for 127.0.0.1 at 2010-10-06 23:37:55) [GET]
+  Parameters: {"id"=>"1"}
+  [4;35;1mAlbum Load (1.3ms)[0m   [0mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albums/edit
+  [4;36;1mPhoto Load (0.7ms)[0m   [0;1mSELECT * FROM "photos" WHERE ("photos".album_id = 1) [0m
+Rendered albums/_photo (32.6ms)
+Rendered albums/_form (637.0ms)
+Completed in 1400ms (View: 887, DB: 2) | 200 OK [http://localhost/albums/1/edit]
+
+
+Processing AlbumsController#update (for 127.0.0.1 at 2010-10-06 23:38:29) [PUT]
+  Parameters: {"commit"=>"Submit", "authenticity_token"=>"7tYCV8RSMO7wbfpVTybfmBttVCGGfG0XrfAMAT4tcc0=", "id"=>"1", "album"=>{"name"=>"first", "photos_attributes"=>{"1286388491161"=>{"data"=>#<File:/tmp/RackMultipart20101006-8183-z8fxgo-0>}, "1286388498481"=>{"data"=>#<File:/tmp/RackMultipart20101006-8183-jxx2tx-0>}, "1286388483749"=>{"data"=>#<File:/tmp/RackMultipart20101006-8183-h5eon7-0>}}}}
+  [4;35;1mAlbum Load (0.5ms)[0m   [0mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+WARNING: Can't mass-assign these protected attributes: photos_attributes
+Redirected to http://localhost:3000/albums/1
+Completed in 63ms (DB: 0) | 302 Found [http://localhost/albums/1]
+
+
+Processing AlbumsController#show (for 127.0.0.1 at 2010-10-06 23:38:29) [GET]
+  Parameters: {"id"=>"1"}
+  [4;36;1mAlbum Load (0.5ms)[0m   [0;1mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albums/show
+  [4;35;1mPhoto Load (0.4ms)[0m   [0mSELECT * FROM "photos" WHERE ("photos".album_id = 1) [0m
+Completed in 37ms (View: 24, DB: 1) | 200 OK [http://localhost/albums/1]
+
+
+Processing AlbumsController#index (for 127.0.0.1 at 2010-10-06 23:38:33) [GET]
+  [4;36;1mAlbum Load (2.5ms)[0m   [0;1mSELECT * FROM "albums" [0m
+Rendering template within layouts/application
+Rendering albums/index
+Completed in 68ms (View: 44, DB: 2) | 200 OK [http://localhost/albums]
+
+
+Processing AlbumsController#show (for 127.0.0.1 at 2010-10-06 23:38:36) [GET]
+  Parameters: {"id"=>"1"}
+  [4;35;1mAlbum Load (1.0ms)[0m   [0mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albums/show
+  [4;36;1mPhoto Load (0.7ms)[0m   [0;1mSELECT * FROM "photos" WHERE ("photos".album_id = 1) [0m
+Completed in 81ms (View: 52, DB: 2) | 200 OK [http://localhost/albums/1]
+
+
+Processing AlbumsController#index (for 127.0.0.1 at 2010-10-06 23:39:47) [GET]
+  [4;35;1mAlbum Load (2.0ms)[0m   [0mSELECT * FROM "albums" [0m
+Rendering template within layouts/application
+Rendering albums/index
+Completed in 58ms (View: 34, DB: 2) | 200 OK [http://localhost/albums]
+
+
+Processing AlbumsController#edit (for 127.0.0.1 at 2010-10-06 23:45:26) [GET]
+  Parameters: {"id"=>"1"}
+  [4;36;1mAlbum Load (0.5ms)[0m   [0;1mSELECT * FROM "albums" WHERE ("albums"."id" = 1) [0m
+Rendering template within layouts/application
+Rendering albums/edit
+  [4;35;1mPhoto Load (0.3ms)[0m   [0mSELECT * FROM "photos" WHERE ("photos".album_id = 1) [0m
+Rendered albums/_photo (3.2ms)
+Rendered albums/_form (28.1ms)
+Completed in 47ms (View: 34, DB: 1) | 200 OK [http://localhost/albums/1/edit]

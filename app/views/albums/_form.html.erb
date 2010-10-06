@@ -1,0 +1,14 @@
+<% form_for @album, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>	
+  <div id="photos">
+     <% if @album.new_record? %>
+       <%= render :partial => 'photo', :locals => { :form => f, :photo => @album.photos.build } %>
+    <% end %>
+  </div>
+  <%= add_object_link("New Photo", f, @album.photos.build, "photo", "#photos") %>
+  <p><%= f.submit "Submit" %></p>
+<% end %>
