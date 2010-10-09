@@ -1,0 +1,6 @@
+TAG: <%= @tag.name.capitalize %>
+<% for photo in @photos %>
+  <p><%= image_tag(photo.data(:thumb)) %></p>
+<% end %>
+
+

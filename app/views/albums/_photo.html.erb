@@ -2,6 +2,10 @@
   <p>
   <% form.fields_for :photos, photo, :child_index => (photo.new_record? ? "index_to_replace_with_js" : nil) do |photo_form| %>    
     <%= photo_form.file_field :data %>
+    
+    <%= photo_form.label :tag_list %>
+    <%= photo_form.text_field :tag_list, :size => 80 %>
+
     <%= link_to_function "delete", "remove_field($(this), ('.photo'))" %><br/>
   <% end %>
   </p>
